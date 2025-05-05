@@ -3,11 +3,54 @@
 #include "Node.hpp"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 
 class Set
 {
 public:
     Set() : m_root(nullptr), m_size(0) {}
+
+    Set(const Set& s) {
+        m_root = s.m_root;
+        m_size = s.m_size;
+    }
+
+    void load(const std::string &nome_arquivo)
+    {
+        std::ifstream arq(nome_arquivo);
+        if (!arq)
+        {
+            std::cerr << "Erro ao abrir o arquivo para leitura.\n";
+            return;
+        }
+        int valor;
+        while (arq >> valor)
+        {
+            insert(valor);
+        }
+        arq.close();
+    }
+
+    void save(const std::string &nome_arquivo) const
+    {
+        std::ofstream arq(nome_arquivo);
+        if (!arq)
+        {
+            std::cerr << "Erro ao abrir o arquivo para escrita.\n";
+            return;
+        }
+        _salvar(m_root, arq);
+        arq.close();
+    }
+
+    void _salvar(Node *node, std::ofstream &arq) const
+    {
+        if (!node)
+            return;
+        _salvar(node->left, arq);
+        arq << node->key << "\n";
+        _salvar(node->right, arq);
+    }
 
     static Set intersection(const Set &P, const Set &Q)
     {
@@ -32,110 +75,132 @@ public:
         return result;
     }
 
-    int maximum() {
-        if(m_root == nullptr) {
+    int maximum()
+    {
+        if (m_root == nullptr)
+        {
             throw std::runtime_error("Set is empty!");
         }
 
-        Node* aux = m_root;
-        while(aux->right != nullptr) {
+        Node *aux = m_root;
+        while (aux->right != nullptr)
+        {
             aux = aux->right;
         }
 
         return aux->key;
     }
 
-    int minimum() {
-        if(m_root == nullptr) {
+    int minimum()
+    {
+        if (m_root == nullptr)
+        {
             throw std::runtime_error("Set is empty!");
         }
 
-        Node* aux = m_root;
-        while(aux->left != nullptr) {
+        Node *aux = m_root;
+        while (aux->left != nullptr)
+        {
             aux = aux->left;
         }
 
         return aux->key;
     }
 
-    int succ(int x) {
-        if(m_root == nullptr) {
+    int succ(int x)
+    {
+        if (m_root == nullptr)
+        {
             throw std::runtime_error("Nenhum elemento no Set");
         }
 
-        Node* aux = m_root;
-        Node* sucessor = nullptr;
+        Node *aux = m_root;
+        Node *sucessor = nullptr;
 
-        while(aux != nullptr) {
-            if(x < aux->key) {
+        while (aux != nullptr)
+        {
+            if (x < aux->key)
+            {
                 sucessor = aux;
-                aux = aux -> left;
-            } else {
+                aux = aux->left;
+            }
+            else
+            {
                 aux = aux->right;
             }
         }
 
-        if(sucessor == nullptr) {
+        if (sucessor == nullptr)
+        {
             throw std::runtime_error("Nao existe sucessor no set");
         }
 
         return sucessor->key;
     }
 
-
-    int pred(int x) {
-        if(m_root == nullptr) {
+    int pred(int x)
+    {
+        if (m_root == nullptr)
+        {
             throw std::runtime_error("Nenhum elemento no Set");
         }
 
-        Node* aux = m_root;
-        Node* pred = nullptr;
+        Node *aux = m_root;
+        Node *pred = nullptr;
 
-        while(aux != nullptr) {
-            if(x > aux->key) {
+        while (aux != nullptr)
+        {
+            if (x > aux->key)
+            {
                 pred = aux;
-                aux = aux -> right;
-            } else {
+                aux = aux->right;
+            }
+            else
+            {
                 aux = aux->left;
             }
         }
 
-        if(pred == nullptr) {
+        if (pred == nullptr)
+        {
             throw std::runtime_error("Nao existe predecessor no set");
         }
 
         return pred->key;
     }
 
-    bool empty() {
+    bool empty()
+    {
         return !size();
     }
 
-    int size() {
+    int size()
+    {
         return m_size;
     }
 
-    void swap(Set& P) {
+    void swap(Set &P)
+    {
         std::swap(m_root, P.m_root);
         std::swap(m_size, P.m_size);
     }
 
     void insert(int v)
     {
-        if(!contains_iterativo(v)) {
+        if (!contains_iterativo(v))
+        {
             m_root = _insert(m_root, v);
             m_size++;
         }
-        
     }
 
     void remove(int k)
     {
-        if(contains_iterativo(k)) {
+        if (contains_iterativo(k))
+        {
             m_root = _remove(m_root, k);
             m_size--;
         }
-        
     }
 
     bool contains(int k)
@@ -148,7 +213,7 @@ public:
         std::cout << "[";
         bool first = true;
         _inorder_print(m_root, first);
-        std::cout << "]";
+        std::cout << "]" << std::endl;
     }
 
     bool contains_iterativo(int k) const

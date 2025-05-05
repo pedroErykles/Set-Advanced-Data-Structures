@@ -2,11 +2,12 @@
 #include "Set.hpp"
 #include <vector>
 #include <unistd.h>
+#include <fstream>
 
 void exibirMenu()
 {
     std::cout << "\n===== Menu de Conjunto =====\n";
-    std::cout << "help -> ajuda";
+    std::cout << "help -> ajuda\n";
     std::cout << "create -> Criar conjunto\n";
     std::cout << "insert (conjunto) -> Inserir elementos\n";
     std::cout << "remove (conjunto) (elemento) -> Remover elemento\n";
@@ -24,11 +25,14 @@ void exibirMenu()
     std::cout << "union (A) (B) -> União (A u B)\n";
     std::cout << "intersection (A) (B) -> Interseção (A ∩ B)\n";
     std::cout << "diff (A) (B) -> Diferença (A - B)\n";
+    std::cout << "save (conj) (filename) -> Salvar conjunto\n";
+    std::cout << "load (filename) -> carregar conjunto\n";
     std::cout << "exit -> Sair\n";
     std::cout << "=========================\n";
 }
 
-std::vector<Set *> sets;
+std::vector<Set*> sets;
+Set* generator = new Set();
 
 Set *escolherConjunto()
 {
@@ -50,12 +54,14 @@ int main()
     std::cout << "All trees are seeded..." << std::endl;
     sleep(1);
     std::cout << "Ready... Set... Go!" << std::endl;
+    sleep(1);
 
     std::cout << "Set manager on! Type help to get more instructions." << std::endl;
 
     std::string opcao;
     do
     {
+        std::cout << "command => ";
         std::cin >> opcao;
         Set *conj = nullptr;
         Set *sec_conj = nullptr;
@@ -81,10 +87,14 @@ int main()
                     std::cin >> s;
                     conj->insert(s);
                 }
+
+                std::cout << "Set updated!" << std::endl;
             }
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "remove")
@@ -101,6 +111,8 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "contains")
@@ -117,10 +129,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "set-show")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -129,10 +144,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "tree-show")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -141,10 +159,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "size")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -153,10 +174,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "empty")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -165,10 +189,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "min")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -177,10 +204,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "max")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -189,10 +219,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "succ")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -204,10 +237,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "pred")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -219,10 +255,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "clear")
         {
+            std::cout << "Which set will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -232,10 +271,13 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "swap")
         {
+            std::cout << "Which sets will be selected? ";
             try
             {
                 conj = escolherConjunto();
@@ -253,30 +295,24 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "union")
         {
+            std::cout << "Select the two sets: ";
             try
             {
                 conj = escolherConjunto();
                 sec_conj = escolherConjunto();
                 if (conj != sec_conj)
                 {
-                    Set *result = new Set();
-                    result->union_between(*conj, *sec_conj);
+                    Set* result = new Set(Set::union_between(*conj, *sec_conj));
                     std::cout << "Sets united!" << std::endl;
-                    std::cout << "Do you want to save the result? (y/n): ";
-                    char op;
-                    std::cin >> op;
-                    if (op == 'y')
-                    {
-                        sets.push_back(result);
-                    }
-                    else
-                    {
-                        delete result;
-                    }
+                    result->set_show();
+                    sets.push_back(result);
+                    std::cout << "set created at index " << sets.size() << std::endl;
                 }
                 else
                 {
@@ -286,30 +322,25 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
         }
         else if (opcao == "intersection")
         {
+            std::cout << "Select the two sets: ";
             try
             {
                 conj = escolherConjunto();
                 sec_conj = escolherConjunto();
                 if (conj != sec_conj)
                 {
-                    Set *result = new Set();
-                    result->intersection(*conj, *sec_conj);
-                    std::cout << "Intersection completed!" << std::endl;
-                    std::cout << "Do you want to save the result? (y/n): ";
-                    char op;
-                    std::cin >> op;
-                    if (op == 'y')
-                    {
-                        sets.push_back(result);
-                    }
-                    else
-                    {
-                        delete result;
-                    }
+                    Set* result = new Set(Set::intersection(*conj, *sec_conj));
+                    std::cout << "Intersection created!" << std::endl;
+                    result->set_show();
+                    sets.push_back(result);
+                    std::cout << "set created at index " << sets.size() << std::endl;
+                    
                 }
                 else
                 {
@@ -319,10 +350,68 @@ int main()
             catch (const std::runtime_error &e)
             {
                 std::cout << e.what() << std::endl;
-            } 
-        } else if(opcao == "help") {
-                exibirMenu();
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
             }
+        } else if(opcao == "diff") {
+            std::cout << "Select the two sets: ";
+            try
+            {
+                conj = escolherConjunto();
+                sec_conj = escolherConjunto();
+                if (conj != sec_conj)
+                {
+                    Set* result = new Set(Set::difference(*conj, *sec_conj));
+                    std::cout << "Difference calculated!" << std::endl;
+                    result->set_show();
+                    sets.push_back(result);
+                    std::cout << "set created at index " << sets.size() << std::endl;
+                }
+                else
+                {
+                    std::cout << "Cannot diff the same set with itself." << std::endl;
+                }
+            }
+            catch (const std::runtime_error &e)
+            {
+                std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
+            }
+        }
+        else if (opcao == "help")
+        {
+            exibirMenu();
+        }
+        else if (opcao == "save")
+        {
+            std::cout << "Which set to save? ";
+            try
+            {
+                conj = escolherConjunto();
+                std::cout << "Filename: ";
+                std::string nome;
+                std::cin >> nome;
+                conj->save(nome);
+                std::cout << "Set saved!\n";
+            }
+            catch (const std::runtime_error &e)
+            {
+                std::cout << e.what() << std::endl;
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
+            }
+        }
+        else if (opcao == "load")
+        {
+            std::cout << "Filename to load: ";
+            std::string nome;
+            std::cin >> nome;
+            Set *novo = new Set();
+            novo->load(nome);
+            sets.push_back(novo);
+            std::cout << "Set loaded at index " << sets.size() - 1 << "\n";
+        }
 
         std::cout << std::endl;
     } while (opcao != "exit");
