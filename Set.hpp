@@ -34,7 +34,7 @@ public:
 
     int maximum() {
         if(m_root == nullptr) {
-            throw std::runtime_error("Nenhum elemento no Set");
+            throw std::runtime_error("Set is empty!");
         }
 
         Node* aux = m_root;
@@ -47,7 +47,7 @@ public:
 
     int minimum() {
         if(m_root == nullptr) {
-            throw std::runtime_error("Nenhum elemento no Set");
+            throw std::runtime_error("Set is empty!");
         }
 
         Node* aux = m_root;
